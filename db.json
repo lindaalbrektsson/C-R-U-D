@@ -1,19 +1,51 @@
 {
-  "users": [
+  "categories": [
     {
       "id": "1",
-      "username": "Freddie",
-      "password": "1234"
+      "name": "Kids"
     },
     {
       "id": "2",
-      "username": "Nicole",
-      "password": "2345"
+      "name": "Romance"
     },
     {
-      "password": "8888",
-      "username": "Emelie",
-      "id": "3"
+      "id": "3",
+      "name": "Horror"
     }
-  ]
+  ],
+  "movies": [
+    {
+      "id": "3",
+      "title": "Dirty Dancing",
+      "year": 1987,
+      "rating": 5,
+      "image": "https://upload.wikimedia.org/wikipedia/en/4/4f/Dirty_Dancing.jpg",
+      "categoryId": 2
+    },
+    {
+      "id": "4",
+      "title": "Pretty Woman",
+      "year": 1990,
+      "rating": 4,
+      "image": "https://upload.wikimedia.org/wikipedia/en/8/88/Pretty_Woman_movie.jpg",
+      "categoryId": 2
+    },
+    {
+      "id": "5",
+      "title": "The Shining",
+      "year": 1980,
+      "rating": 5,
+      "image": "https://upload.wikimedia.org/wikipedia/en/1/1f/The_Shining_1980.png",
+      "categoryId": 3
+    },
+    {
+      "id": "6",
+      "title": "It",
+      "year": 2017,
+      "rating": 4,
+      "image": "https://upload.wikimedia.org/wikipedia/en/5/5a/It_%282017%29_poster.jpg",
+      "categoryId": 3
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

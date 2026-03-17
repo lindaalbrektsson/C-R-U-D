@@ -1,47 +1,17 @@
-async function getUsers() {
-  const response = await fetch("http://localhost:3000/users");
-  const data = await response.json();
-  console.log(data);
-}
+const moviesContainer = document.getElementById("moviesContainer");
+const singleMovieContainer = document.getElementById("singleMovieContainer");
+const message = document.getElementById("message");
 
-async function getSpecificUser(id) {
-  const response = await fetch(`http://localhost:3000/users/${id}`);
-  const data = await response.json();
-  console.log(data);
-}
+const getMoviesBtn = document.getElementById("getMoviesBtn");
+const getMovieBtn = document.getElementById("getMovieBtn");
 
-async function addUser() {
-  const response = await fetch(`http://localhost:3000/users/`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ id: 3, username: "Emelie", password: "1111" }),
-  });
+const movieIdInput = document.getElementById("movieIdInput");
 
-  const data = await response.json();
-  console.log(data);
-}
+const addMovieForm = document.getElementById("addMovieForm");
+const updateMovieForm = document.getElementById("updateMovieForm");
 
-async function editUser(id) {
-  const response = await fetch(`http://localhost:3000/users/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ password: "8888" }),
-  });
+const categorySelect = document.getElementById("categoryId");
+const updateCategorySelect = document.getElementById("updateCategoryId");
 
-  const data = await response.json();
-  console.log(data);
-}
-
-async function deleteUser(id) {
-  const response = await fetch(`http://localhost:3000/users/${id}`, {
-    method: "DELETE",
-  });
-
-  const data = await response.json();
-  console.log(data);
-}
-deleteUser(1);
+const API_MOVIES = "http://localhost:3000/movies";
+const API_CATEGORIES = "http://localhost:3000/categories";
