@@ -2,24 +2,32 @@
   "categories": [
     {
       "id": "1",
-      "name": "Kids"
+      "name": "Barn"
     },
     {
       "id": "2",
-      "name": "Romance"
+      "name": "Romantik"
     },
     {
       "id": "3",
-      "name": "Horror"
+      "name": "Skräck"
     }
   ],
   "movies": [
+    {
+      "id": "1",
+      "title": "Madagaskar",
+      "year": 2006,
+      "rating": 4,
+      "image": "https://media.themoviedb.org/t/p/w220_and_h330_face/h51m3NmBNamNPMIrbNDk6Beoipm.jpg",
+      "categoryId": 1
+    },
     {
       "id": "2",
       "title": "Shrek",
       "year": 2001,
       "rating": 5,
-      "image": "https://upload.wikimedia.org/wikipedia/en/3/39/Shrek.jpg",
+      "image": "https://image.tmdb.org/t/p/original/6vBnrWfdaE1EOd3ud2xerQwl14a.jpg",
       "categoryId": 1
     },
     {
@@ -27,7 +35,7 @@
       "title": "Dirty Dancing",
       "year": 1987,
       "rating": 5,
-      "image": "https://upload.wikimedia.org/wikipedia/en/4/4f/Dirty_Dancing.jpg",
+      "image": "https://i.ebayimg.com/images/g/z1oAAOSwNipkcPiE/s-l1600.webp",
       "categoryId": 2
     },
     {
@@ -35,16 +43,16 @@
       "title": "Pretty Woman",
       "year": 1990,
       "rating": 4,
-      "image": "https://upload.wikimedia.org/wikipedia/en/8/88/Pretty_Woman_movie.jpg",
+      "image": "https://www.themoviedb.org/t/p/w600_and_h900_face/hVHUfT801LQATGd26VPzhorIYza.jpg",
       "categoryId": 2
     },
     {
       "id": "5",
-      "title": "The Shining",
-      "year": 1980,
+      "title": "Hitta Nemo",
+      "year": 2003,
       "rating": 5,
-      "image": "https://upload.wikimedia.org/wikipedia/en/1/1f/The_Shining_1980.png",
-      "categoryId": 3
+      "image": "https://media.themoviedb.org/t/p/w220_and_h330_face/srO3d9mJp8IUGfYaiXewlwWGGz4.jpg",
+      "categoryId": 1
     },
     {
       "id": "6",
@@ -55,28 +63,52 @@
       "categoryId": 3
     },
     {
-      "id": "90cc",
-      "title": "ewerw",
-      "year": 1986,
-      "rating": 3,
-      "image": "www.image.se",
+      "id": "7",
+      "title": "The Ring",
+      "year": 2002,
+      "rating": 5,
+      "image": "https://media.themoviedb.org/t/p/w220_and_h330_face/61ioJ84TehV7Uklnp5PLPPIh6kE.jpg",
+      "categoryId": 3
+    },
+    {
+      "id": "8",
+      "title": "Titanic",
+      "year": 1997,
+      "rating": 5,
+      "image": "https://media.themoviedb.org/t/p/w220_and_h330_face/vt8Pr5AZXBc6A3L9toK8XpCgj3V.jpg",
       "categoryId": 2
     },
     {
-      "id": "198e",
-      "title": "dd",
-      "year": 1,
-      "rating": 1,
-      "image": "w",
+      "id": "9",
+      "title": "The Notebook",
+      "year": 2004,
+      "rating": 4,
+      "image": "https://upload.wikimedia.org/wikipedia/en/8/86/Posternotebook.jpg",
+      "categoryId": 2
+    },
+    {
+      "id": "10",
+      "title": "Frozen",
+      "year": 2013,
+      "rating": 3,
+      "image": "https://upload.wikimedia.org/wikipedia/en/0/05/Frozen_%282013_film%29_poster.jpg",
       "categoryId": 1
     },
     {
-      "id": "8e28",
-      "title": "hej",
-      "year": 133,
-      "rating": 1,
-      "image": "111",
-      "categoryId": 1
+      "id": "11",
+      "title": "Saw",
+      "year": 2004,
+      "rating": 4,
+      "image": "https://www.themoviedb.org/t/p/w600_and_h900_face/rLNSOudrayDBo1uqXjrhxcjODIC.jpg",
+      "categoryId": 3
+    },
+    {
+      "id": "12",
+      "title": "Carrie",
+      "year": 2013,
+      "rating": 4,
+      "image": "https://www.themoviedb.org/t/p/w600_and_h900_face/kloXz9qwO23z9Kbt3z3MgnjF4xO.jpg",
+      "categoryId": 3
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
