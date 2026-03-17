@@ -37,13 +37,27 @@ function renderMovies(movies) {
   moviesContainer.innerHTML = "";
 
   movies.forEach((movie) => {
-    moviesContainer.innerHTML += `
-      <div>
-        <img src="${movie.image}" alt="${movie.title}">
-        <h3>${movie.title}</h3>
-        <p>År: ${movie.year}</p>
-        <p>Betyg: ${movie.rating}</p>
-      </div>
-    `;
+    const movieCard = document.createElement("div");
+    movieCard.classList.add("movie-card");
+
+    const movieImage = document.createElement("img");
+    movieImage.src = movie.image;
+    movieImage.alt = movie.title;
+
+    const movieTitle = document.createElement("h3");
+    movieTitle.textContent = movie.title;
+
+    const movieYear = document.createElement("p");
+    movieYear.textContent = `År: ${movie.year}`;
+
+    const movieRating = document.createElement("p");
+    movieRating.textContent = `Betyg: ${movie.rating}`;
+
+    movieCard.appendChild(movieImage);
+    movieCard.appendChild(movieTitle);
+    movieCard.appendChild(movieYear);
+    movieCard.appendChild(movieRating);
+
+    moviesContainer.appendChild(movieCard);
   });
 }
