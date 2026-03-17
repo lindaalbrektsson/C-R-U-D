@@ -34,7 +34,7 @@ async function getMovies() {
 }
 
 function renderMovies(movies) {
-  moviesContainer.innerHTML = "";
+  moviesContainer.replaceChildren();
 
   movies.forEach((movie) => {
     const movieCard = document.createElement("div");
@@ -55,7 +55,7 @@ function renderMovies(movies) {
 
     const movieCategory = document.createElement("p");
     const category = categories.find((cat) => cat.id === movie.categoryId);
-    movieCategory.textContent = `Kategori: ${category ? category.name : ""}`;
+    movieCategory.textContent = `Kategori: ${category ? category.name : "Okänd"}`;
 
     movieCard.appendChild(movieImage);
     movieCard.appendChild(movieTitle);
@@ -73,6 +73,7 @@ async function getCategories() {
   categories = await response.json();
 
   console.log(categories);
+  renderCategoryOptions();
 }
 
 async function init() {
@@ -81,3 +82,47 @@ async function init() {
 }
 
 init();
+
+function renderCategoryOptions() {
+  categorySelect.replaceChildren();
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "";
+  defaultOption.textContent = "Välj kategori";
+
+  categorySelect.appendChild(defaultOption);
+
+  categories.forEach((category) => {
+    const option = document.createElement("option");
+    option.value = category.id;
+    option.textContent = category.name;
+
+    categorySelect.appendChild(option);
+  });
+}
+
+addMovieForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const newMovie = {
+    title: document.getElementById("title").value,
+    year: Number(document.getElementById("year").value),
+    rating: Number(document.getElementById("rating").value),
+    image: document.getElementById("image").value,
+    categoryId: Number(categorySelect.value),
+  };
+
+  addMovie(newMovie);
+});
+
+async function addMovie(newMovie) {
+  const response = await fetch("http://localhost:3000/movies", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newMovie),
+  });
+
+  const data = await response.json();
+  console.log(data);
+}
