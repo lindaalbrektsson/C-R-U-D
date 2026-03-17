@@ -57,11 +57,22 @@ function renderMovies(movies) {
     const category = categories.find((cat) => cat.id === movie.categoryId);
     movieCategory.textContent = `Kategori: ${category ? category.name : "Okänd"}`;
 
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Ta bort";
+    deleteBtn.classList.add("delete-btn");
+
+deleteBtn.addEventListener("click", () => {
+  deleteMovie(movie.id);
+});
+
+movieCard.appendChild(deleteBtn);
+
     movieCard.appendChild(movieImage);
     movieCard.appendChild(movieTitle);
     movieCard.appendChild(movieYear);
     movieCard.appendChild(movieRating);
     movieCard.appendChild(movieCategory);
+    movieCard.appendChild(deleteBtn);
 
     moviesContainer.appendChild(movieCard);
 
@@ -115,14 +126,58 @@ addMovieForm.addEventListener("submit", (event) => {
 });
 
 async function addMovie(newMovie) {
-  const response = await fetch("http://localhost:3000/movies", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(newMovie),
-  });
+  try {
+    const response = await fetch(API_MOVIES, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newMovie),
+    });
 
-  const data = await response.json();
-  console.log(data);
+    if (!response.ok) {
+      throw new Error("Kunde inte lägga till filmen.");
+    }
+
+    const data = await response.json();
+    console.log(data);
+
+    addMovieForm.reset();
+    message.textContent = "Filmen lades till.";
+    await getMovies();
+  } catch (error) {
+    console.log(error);
+    message.textContent = error.message;
+  }
+}
+
+addMovieForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const newMovie = {
+    title: document.getElementById("title").value,
+    year: Number(document.getElementById("year").value),
+    rating: Number(document.getElementById("rating").value),
+    image: document.getElementById("image").value,
+    categoryId: Number(categorySelect.value),
+  };
+
+  await addMovie(newMovie);
+});
+
+async function deleteMovie(id) {
+  try {
+    const response = await fetch(`${API_MOVIES}/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error("Kunde inte ta bort filmen.");
+    }
+
+    message.textContent = "Filmen togs bort.";
+    await getMovies();
+  } catch (error) {
+    message.textContent = error.message;
+  }
 }
