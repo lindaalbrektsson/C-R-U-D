@@ -16,6 +16,8 @@ const updateCategorySelect = document.getElementById("updateCategoryId");
 const API_MOVIES = "http://localhost:3000/movies";
 const API_CATEGORIES = "http://localhost:3000/categories";
 
+let categories = [];
+
 async function getMovies() {
   try {
     const response = await fetch("http://localhost:3000/movies");
@@ -30,8 +32,6 @@ async function getMovies() {
     console.log(error);
   }
 }
-
-getMovies();
 
 function renderMovies(movies) {
   moviesContainer.innerHTML = "";
@@ -53,11 +53,31 @@ function renderMovies(movies) {
     const movieRating = document.createElement("p");
     movieRating.textContent = `Betyg: ${movie.rating}`;
 
+    const movieCategory = document.createElement("p");
+    const category = categories.find((cat) => cat.id === movie.categoryId);
+    movieCategory.textContent = `Kategori: ${category ? category.name : ""}`;
+
     movieCard.appendChild(movieImage);
     movieCard.appendChild(movieTitle);
     movieCard.appendChild(movieYear);
     movieCard.appendChild(movieRating);
+    movieCard.appendChild(movieCategory);
 
     moviesContainer.appendChild(movieCard);
+
   });
 }
+
+async function getCategories() {
+  const response = await fetch("http://localhost:3000/categories");
+  categories = await response.json();
+
+  console.log(categories);
+}
+
+async function init() {
+  await getCategories();
+  await getMovies();
+}
+
+init();
