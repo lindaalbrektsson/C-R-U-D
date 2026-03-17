@@ -15,14 +15,6 @@
   ],
   "movies": [
     {
-      "id": "1",
-      "title": "Toy Story",
-      "year": 1995,
-      "rating": 3,
-      "image": "https://upload.wikimedia.org/wikipedia/en/1/13/Toy_Story.jpg",
-      "categoryId": 1
-    },
-    {
       "id": "2",
       "title": "Shrek",
       "year": 2001,
@@ -69,6 +61,22 @@
       "rating": 3,
       "image": "www.image.se",
       "categoryId": 2
+    },
+    {
+      "id": "198e",
+      "title": "dd",
+      "year": 1,
+      "rating": 1,
+      "image": "w",
+      "categoryId": 1
+    },
+    {
+      "id": "8e28",
+      "title": "hej",
+      "year": 133,
+      "rating": 1,
+      "image": "111",
+      "categoryId": 1
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
