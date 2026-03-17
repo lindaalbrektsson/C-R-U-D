@@ -22,9 +22,59 @@ p {
     color: #d1d1d1;
 }
 
-.header {
-    margin-bottom: 32px;
-    text-align: center;
+header {
+    max-width: 1200px;
+    margin: 30px auto 25px;
+    padding: 70px 50px;
+    color: white;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    text-align: left;
+    background:
+        linear-gradient(90deg, rgba(20, 0, 0, 0.82) 0%, rgba(10, 10, 10, 0.45) 45%, rgba(10, 10, 10, 0.78) 100%),
+        url("https://t4.ftcdn.net/jpg/09/34/04/61/240_F_934046157_OA0b7ULwT5KoMPDrHQIxPvqK0QhsHk8x.jpg");
+    background-size: cover;
+    background-position: right center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    animation: fadeSlideIn 0.8s ease-out, headerPan 12s ease-in-out infinite alternate;
+}
+
+header h1 {
+    margin: 0;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 4rem;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-shadow:
+        0 0 25px rgba(255, 200, 80, 0.2),
+        0 0 5px rgba(255, 200, 80, 0.3);
+}
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes headerPan {
+    from {
+        background-position: right center;
+    }
+
+    to {
+        background-position: center center;
+    }
 }
 
 .main {
@@ -259,6 +309,18 @@ button:hover {
 @media (max-width: 768px) {
     body {
         padding: 16px;
+    }
+
+    header {
+        padding: 45px 24px;
+        min-height: 180px;
+        background-position: center right;
+        animation: none;
+    }
+
+    header h1 {
+        font-size: 2.8rem;
+        letter-spacing: 2px;
     }
 
     .section {
