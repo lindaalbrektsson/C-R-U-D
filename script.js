@@ -20,7 +20,7 @@ let categories = [];
 
 async function getMovies() {
   try {
-    const response = await fetch("http://localhost:3000/movies");
+    const response = await fetch(API_MOVIES);
 
     if (!response.ok) {
       throw new Error("Kunde inte hämta filmer.");
@@ -30,6 +30,7 @@ async function getMovies() {
     renderMovies(movies);
   } catch (error) {
     console.log(error);
+    message.textContent = error.message;
   }
 }
 
@@ -57,30 +58,36 @@ function renderMovies(movies) {
     const category = categories.find((cat) => cat.id === movie.categoryId);
     movieCategory.textContent = `Kategori: ${category ? category.name : "Okänd"}`;
 
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "Redigera rating";
+    editBtn.classList.add("edit-btn");
+
+    editBtn.addEventListener("click", () => {
+      editMovieRating(movie);
+    });
+
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Ta bort";
     deleteBtn.classList.add("delete-btn");
 
-deleteBtn.addEventListener("click", () => {
-  deleteMovie(movie.id);
-});
-
-movieCard.appendChild(deleteBtn);
+    deleteBtn.addEventListener("click", () => {
+      deleteMovie(movie.id);
+    });
 
     movieCard.appendChild(movieImage);
     movieCard.appendChild(movieTitle);
     movieCard.appendChild(movieYear);
     movieCard.appendChild(movieRating);
     movieCard.appendChild(movieCategory);
+    movieCard.appendChild(editBtn);
     movieCard.appendChild(deleteBtn);
 
     moviesContainer.appendChild(movieCard);
-
   });
 }
 
 async function getCategories() {
-  const response = await fetch("http://localhost:3000/categories");
+  const response = await fetch(API_CATEGORIES);
   categories = await response.json();
 
   console.log(categories);
@@ -96,22 +103,21 @@ init();
 
 function renderCategoryOptions() {
   categorySelect.replaceChildren();
+
   const defaultOption = document.createElement("option");
   defaultOption.value = "";
   defaultOption.textContent = "Välj kategori";
-
   categorySelect.appendChild(defaultOption);
 
   categories.forEach((category) => {
     const option = document.createElement("option");
     option.value = category.id;
     option.textContent = category.name;
-
     categorySelect.appendChild(option);
   });
 }
 
-addMovieForm.addEventListener("submit", (event) => {
+addMovieForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   const newMovie = {
@@ -122,7 +128,7 @@ addMovieForm.addEventListener("submit", (event) => {
     categoryId: Number(categorySelect.value),
   };
 
-  addMovie(newMovie);
+  await addMovie(newMovie);
 });
 
 async function addMovie(newMovie) {
@@ -151,20 +157,6 @@ async function addMovie(newMovie) {
   }
 }
 
-addMovieForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-
-  const newMovie = {
-    title: document.getElementById("title").value,
-    year: Number(document.getElementById("year").value),
-    rating: Number(document.getElementById("rating").value),
-    image: document.getElementById("image").value,
-    categoryId: Number(categorySelect.value),
-  };
-
-  await addMovie(newMovie);
-});
-
 async function deleteMovie(id) {
   try {
     const response = await fetch(`${API_MOVIES}/${id}`, {
@@ -176,6 +168,43 @@ async function deleteMovie(id) {
     }
 
     message.textContent = "Filmen togs bort.";
+    await getMovies();
+  } catch (error) {
+    message.textContent = error.message;
+  }
+}
+
+async function editMovieRating(movie) {
+  const newRating = Number(prompt("Ange nytt betyg mellan 1 och 5:"));
+
+  if (!newRating || newRating < 1 || newRating > 5) {
+    message.textContent = "Betyget måste vara mellan 1 och 5.";
+    return;
+  }
+
+  const updatedMovie = {
+    id: movie.id,
+    title: movie.title,
+    year: movie.year,
+    rating: newRating,
+    image: movie.image,
+    categoryId: movie.categoryId,
+  };
+
+  try {
+    const response = await fetch(`${API_MOVIES}/${movie.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedMovie),
+    });
+
+    if (!response.ok) {
+      throw new Error("Kunde inte uppdatera filmen.");
+    }
+
+    message.textContent = "Betyget uppdaterades.";
     await getMovies();
   } catch (error) {
     message.textContent = error.message;
