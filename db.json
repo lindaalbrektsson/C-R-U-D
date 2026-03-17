@@ -1,21 +1,37 @@
 {
   "categories": [
     {
-      "id": "1",
+      "id": 1,
       "name": "Kids"
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "Romance"
     },
     {
-      "id": "3",
+      "id": 3,
       "name": "Horror"
     }
   ],
   "movies": [
     {
-      "id": "3",
+      "id": 1,
+      "title": "Toy Story",
+      "year": 1995,
+      "rating": 5,
+      "image": "https://upload.wikimedia.org/wikipedia/en/1/13/Toy_Story.jpg",
+      "categoryId": 1
+    },
+    {
+      "id": 2,
+      "title": "Shrek",
+      "year": 2001,
+      "rating": 5,
+      "image": "https://upload.wikimedia.org/wikipedia/en/3/39/Shrek.jpg",
+      "categoryId": 1
+    },
+    {
+      "id": 3,
       "title": "Dirty Dancing",
       "year": 1987,
       "rating": 5,
@@ -23,7 +39,7 @@
       "categoryId": 2
     },
     {
-      "id": "4",
+      "id": 4,
       "title": "Pretty Woman",
       "year": 1990,
       "rating": 4,
@@ -31,7 +47,7 @@
       "categoryId": 2
     },
     {
-      "id": "5",
+      "id": 5,
       "title": "The Shining",
       "year": 1980,
       "rating": 5,
@@ -39,13 +55,12 @@
       "categoryId": 3
     },
     {
-      "id": "6",
+      "id": 6,
       "title": "It",
       "year": 2017,
       "rating": 4,
       "image": "https://upload.wikimedia.org/wikipedia/en/5/5a/It_%282017%29_poster.jpg",
       "categoryId": 3
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }
