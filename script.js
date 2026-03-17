@@ -15,3 +15,22 @@ const updateCategorySelect = document.getElementById("updateCategoryId");
 
 const API_MOVIES = "http://localhost:3000/movies";
 const API_CATEGORIES = "http://localhost:3000/categories";
+
+async function getMovies() {
+  const response = await fetch("http://localhost:3000/movies");
+  const movies = await response.json();
+
+  moviesContainer.innerHTML = "";
+
+  movies.forEach((movie) => {
+    moviesContainer.innerHTML += `
+      <div>
+        <h3>${movie.title}</h3>
+        <p>År: ${movie.year}</p>
+        <p>Betyg: ${movie.rating}</p>
+      </div>
+    `;
+  });
+}
+
+getMovies();
