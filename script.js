@@ -3,6 +3,7 @@ const moviesMessage = document.getElementById("moviesMessage");
 const message = document.getElementById("message");
 
 const searchMessage = document.getElementById("searchMessage");
+const idMessage = document.getElementById("idMessage");
 const addMovieMessage = document.getElementById("addMovieMessage");
 
 const getMoviesBtn = document.getElementById("getMoviesBtn");
@@ -67,13 +68,26 @@ async function getMovieById(id) {
 
     const movie = await response.json();
 
-    searchMessage.textContent = "";
+    idMessage.textContent = "";
     moviesMessage.textContent = "";
     message.textContent = "";
     renderMovies([movie]);
   } catch (error) {
-  searchMessage.textContent = error.message;
+    idMessage.textContent = error.message;
   }
+}
+
+function handleGetMovieById() {
+  const id = movieIdInput.value.trim();
+
+  idMessage.textContent = "";
+
+  if (!id) {
+    idMessage.textContent = "Skriv in ett id.";
+    return;
+  }
+
+  getMovieById(id);
 }
 
 // Visa filmer
@@ -185,6 +199,11 @@ function filterMovies() {
   const searchText = searchInput.value.toLowerCase().trim();
   const selectedCategory = Number(filterCategory.value);
 
+  if (!searchText && !selectedCategory) {
+    searchMessage.textContent = "Skriv in en filmtitel eller välj en kategori.";
+    return;
+  }
+
   if (searchText) {
     filteredMovies = filteredMovies.filter((movie) =>
       movie.title.toLowerCase().includes(searchText)
@@ -207,6 +226,57 @@ function filterMovies() {
   renderMovies(filteredMovies);
 }
 
+// Sök med knapp och enter
+searchBtn.addEventListener("click", filterMovies);
+
+searchInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    filterMovies();
+  }
+});
+
+searchInput.addEventListener("search", () => {
+  if (!searchInput.value.trim() && !filterCategory.value) {
+    showAllMovies();
+  } else {
+    filterMovies();
+  }
+});
+
+// Filtrera när kategori ändras
+filterCategory.addEventListener("change", filterMovies);
+
+// Visa alla filmer igen
+getMoviesBtn.addEventListener("click", showAllMovies);
+
+function refreshVisibleMovies() {
+  const hasSearch = searchInput.value.toLowerCase().trim() !== "";
+  const hasCategory = filterCategory.value !== "";
+
+  if (hasSearch || hasCategory) {
+    filterMovies();
+  } else {
+    searchMessage.textContent = "";
+    moviesMessage.textContent = "";
+    renderMovies(movies);
+  }
+}
+
+// Hämta film via id med knapp och Enter
+getMovieBtn.addEventListener("click", handleGetMovieById);
+
+movieIdInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    handleGetMovieById();
+  }
+});
+
+movieIdInput.addEventListener("search", () => {
+  if (!movieIdInput.value.trim()) {
+    showAllMovies();
+  }
+});
+
 // Visa alla filmer igen efter sökning
 function showAllMovies() {
   searchInput.value = "";
@@ -214,6 +284,7 @@ function showAllMovies() {
   movieIdInput.value = "";
 
   searchMessage.textContent = "";
+  idMessage.textContent = "";
   moviesMessage.textContent = "";
   addMovieMessage.textContent = "";
   message.textContent = "";
@@ -242,12 +313,30 @@ async function addMovie(newMovie) {
 
     addMovieForm.reset();
     await getMovies();
-    filterMovies();
+    refreshVisibleMovies();
   } catch (error) {
     console.log(error);
     addMovieMessage.textContent = error.message;
   }
 }
+
+// Formulär för att lägga till film
+addMovieForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  addMovieMessage.textContent = "";
+  message.textContent = "";
+
+  const newMovie = {
+    title: document.getElementById("title").value,
+    year: Number(document.getElementById("year").value),
+    rating: Number(document.getElementById("rating").value),
+    image: document.getElementById("image").value,
+    categoryId: Number(categorySelect.value),
+  };
+
+  await addMovie(newMovie);
+});
 
 // Ta bort film
 async function deleteMovie(id) {
@@ -263,7 +352,7 @@ async function deleteMovie(id) {
     }
 
     await getMovies();
-    filterMovies();
+    refreshVisibleMovies();
   } catch (error) {
     moviesMessage.textContent = error.message;
   }
@@ -303,74 +392,11 @@ async function editMovieRating(movie) {
     }
 
     await getMovies();
-    filterMovies();
+    refreshVisibleMovies();
   } catch (error) {
     moviesMessage.textContent = error.message;
   }
 }
-
-// // Formulär för att lägga till film
-addMovieForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-
-  addMovieMessage.textContent = "";
-  message.textContent = "";
-
-  const newMovie = {
-    title: document.getElementById("title").value,
-    year: Number(document.getElementById("year").value),
-    rating: Number(document.getElementById("rating").value),
-    image: document.getElementById("image").value,
-    categoryId: Number(categorySelect.value),
-  };
-
-  await addMovie(newMovie);
-});
-
-// Sökknapp
-searchBtn.addEventListener("click", filterMovies);
-
-// Filtrera när kategori ändras
-filterCategory.addEventListener("change", filterMovies);
-
-// Visa alla filmer igen
-getMoviesBtn.addEventListener("click", showAllMovies);
-
-// Sök med Enter
-searchInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    filterMovies();
-  }
-});
-
-// Automatisk x-knapp i sökfältet
-searchInput.addEventListener("search", filterMovies);
-
-// Hämta film via id
-getMovieBtn.addEventListener("click", () => {
-  const id = movieIdInput.value;
-
-  if (!id) {
-    searchMessage.textContent = "Skriv in ett id.";
-    return;
-  }
-
-  getMovieById(id);
-});
-
-// Hämta med Enter
-movieIdInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    const id = movieIdInput.value;
-
-    if (!id) {
-      searchMessage.textContent = "Skriv in ett id.";
-      return;
-    }
-
-    getMovieById(id);
-  }
-});
 
 // Starta appen
 async function init() {
