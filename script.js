@@ -77,6 +77,7 @@ async function getMovieById(id) {
   }
 }
 
+// Hantera hämta film via ID
 function handleGetMovieById() {
   const id = movieIdInput.value.trim();
 
@@ -226,7 +227,7 @@ function filterMovies() {
   renderMovies(filteredMovies);
 }
 
-// Sök med knapp och enter
+// Sök med knapp och Enter
 searchBtn.addEventListener("click", filterMovies);
 
 searchInput.addEventListener("keydown", (event) => {
@@ -243,40 +244,6 @@ searchInput.addEventListener("search", () => {
   }
 });
 
-// Filtrera när kategori ändras
-filterCategory.addEventListener("change", filterMovies);
-
-// Visa alla filmer igen
-getMoviesBtn.addEventListener("click", showAllMovies);
-
-function refreshVisibleMovies() {
-  const hasSearch = searchInput.value.toLowerCase().trim() !== "";
-  const hasCategory = filterCategory.value !== "";
-
-  if (hasSearch || hasCategory) {
-    filterMovies();
-  } else {
-    searchMessage.textContent = "";
-    moviesMessage.textContent = "";
-    renderMovies(movies);
-  }
-}
-
-// Hämta film via id med knapp och Enter
-getMovieBtn.addEventListener("click", handleGetMovieById);
-
-movieIdInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    handleGetMovieById();
-  }
-});
-
-movieIdInput.addEventListener("search", () => {
-  if (!movieIdInput.value.trim()) {
-    showAllMovies();
-  }
-});
-
 // Visa alla filmer igen efter sökning
 function showAllMovies() {
   searchInput.value = "";
@@ -290,6 +257,19 @@ function showAllMovies() {
   message.textContent = "";
 
   renderMovies(movies);
+}
+
+function refreshVisibleMovies() {
+  const hasSearch = searchInput.value.toLowerCase().trim() !== "";
+  const hasCategory = filterCategory.value !== "";
+
+  if (hasSearch || hasCategory) {
+    filterMovies();
+  } else {
+    searchMessage.textContent = "";
+    moviesMessage.textContent = "";
+    renderMovies(movies);
+  }
 }
 
 // Lägg till film
@@ -397,6 +377,27 @@ async function editMovieRating(movie) {
     moviesMessage.textContent = error.message;
   }
 }
+
+// Filtrera när kategori ändras
+filterCategory.addEventListener("change", filterMovies);
+
+// Visa alla filmer igen
+getMoviesBtn.addEventListener("click", showAllMovies);
+
+// Hämta film via id med knapp och Enter
+getMovieBtn.addEventListener("click", handleGetMovieById);
+
+movieIdInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    handleGetMovieById();
+  }
+});
+
+movieIdInput.addEventListener("search", () => {
+  if (!movieIdInput.value.trim()) {
+    showAllMovies();
+  }
+});
 
 // Starta appen
 async function init() {
