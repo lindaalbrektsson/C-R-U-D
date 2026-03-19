@@ -309,7 +309,7 @@ async function editMovieRating(movie) {
   }
 }
 
-// Lägg till film
+// // Formulär för att lägga till film
 addMovieForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
