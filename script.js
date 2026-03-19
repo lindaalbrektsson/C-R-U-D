@@ -339,6 +339,20 @@ getMovieBtn.addEventListener("click", () => {
   getMovieById(id);
 });
 
+// Hämta med Enter
+movieIdInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    const id = movieIdInput.value;
+
+    if (!id) {
+      searchMessage.textContent = "Skriv in ett id.";
+      return;
+    }
+
+    getMovieById(id);
+  }
+});
+
 // Starta appen
 async function init() {
   await getCategories();
