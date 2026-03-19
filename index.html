@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="sv">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,58 +12,56 @@
 </head>
 
 <body>
-    <header class="header">
+    <header/>
         <h1>Lindas filmer</h1>
     </header>
 
-    <main class="main">
-<section class="status-section">
-    <p id="message" class="message"></p>
-</section>
+<main class="main">
+    <section class="status-section">
+        <p id="message" class="message"></p>
+    </section>
 
-        <section class="section">
-            <h2>Sök och filtrera</h2>
-
-            <div class="search-row">
-                <input type="search" id="searchInput" placeholder="Sök film på titel" />
-                <select id="filterCategory">
-                    <option value="">Alla kategorier</option>
-                </select>
-                <button id="searchBtn" class="btn">Sök filmer</button>
-            </div>
-            <p id="searchMessage" class="local-message"></p>
+    <section class="section">
+        <h2>Sök och filtrera</h2>
+        <div class="search-row">
+            <input type="search" id="searchInput" placeholder="Sök film på titel" />
+            <select id="filterCategory">
+                <option value="">Alla kategorier</option>
+            </select>
+            <button id="searchBtn" class="btn">Sök filmer</button>
+        </div>
+        <p id="searchMessage" class="local-message"></p>
         <div class="get-by-id-row">
             <input type="number" id="movieIdInput" placeholder="Hämta film via ID" />
             <button id="getMovieBtn" class="btn">Hämta film</button>
         </div>
-        </section>
+    </section>
 
-        <section class="section">
-            <div class="section-top">
-                <h2>Alla filmer</h2>
-                <button id="getMoviesBtn" class="btn">Visa alla</button>
-            </div>
-            <div id="moviesContainer"></div>
-            <p id="moviesMessage" class="local-message"></p>
-        </section>
+    <section class="section">
+        <div class="section-top">
+            <h2>Alla filmer</h2>
+            <button id="getMoviesBtn" class="btn">Visa alla</button>
+        </div>
+        <div id="moviesContainer"></div>
+        <p id="moviesMessage" class="local-message"></p>
+    </section>
 
-        <section class="section">
-            <h2>Lägg till ny film</h2>
-            <form id="addMovieForm" class="movie-form">
-                <input type="text" id="title" placeholder="Titel" required />
-                <input type="number" id="year" placeholder="År" required />
-                <input type="number" id="rating" placeholder="Betyg 1-5" min="1" max="5" required />
-                <input type="text" id="image" placeholder="Bild-URL" />
+    <section class="section">
+        <h2>Lägg till ny film</h2>
+        <form id="addMovieForm" class="movie-form">
+            <input type="text" id="title" placeholder="Titel" required />
+            <input type="number" id="year" placeholder="År" required />
+            <input type="number" id="rating" placeholder="Betyg 1-5" min="1" max="5" required />
+            <input type="text" id="image" placeholder="Bild-URL" />
 
-                <select id="categoryId" required>
-                    <option value="">Välj kategori</option>
-                </select>
+            <select id="categoryId" required>
+                <option value="">Välj kategori</option>
+            </select>
 
-                <button type="submit" class="btn">Lägg till film</button>
-            </form>
-            <p id="addMovieMessage" class="local-message"></p>
-        </section>
-    </main>
+            <button type="submit" class="btn">Lägg till film</button>
+        </form>
+        <p id="addMovieMessage" class="local-message"></p>
+    </section>
+</main>
 </body>
-
 </html>

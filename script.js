@@ -69,25 +69,11 @@ async function getMovieById(id) {
 
     searchMessage.textContent = "";
     moviesMessage.textContent = "";
+    message.textContent = "";
     renderMovies([movie]);
   } catch (error) {
-    moviesContainer.replaceChildren();
-    searchMessage.textContent = error.message;
+  searchMessage.textContent = error.message;
   }
-}
-
-// Visa alla filmer igen
-function showAllMovies() {
-  searchInput.value = "";
-  filterCategory.value = "";
-  movieIdInput.value = "";
-
-  searchMessage.textContent = "";
-  moviesMessage.textContent = "";
-  addMovieMessage.textContent = "";
-  message.textContent = "";
-
-  renderMovies(movies);
 }
 
 // Visa filmer
@@ -162,7 +148,7 @@ function renderMovies(movieList) {
   });
 }
 
-// Visa kategorier i dropdowns
+// Kategorier
 function renderCategoryOptions() {
   categorySelect.replaceChildren();
   filterCategory.replaceChildren();
@@ -192,7 +178,7 @@ function renderCategoryOptions() {
   });
 }
 
-// Sök och filtrera filmer
+// Sök och filtrera
 function filterMovies() {
   let filteredMovies = [...movies];
 
@@ -219,6 +205,20 @@ function filterMovies() {
 
   moviesMessage.textContent = "";
   renderMovies(filteredMovies);
+}
+
+// Visa alla filmer igen efter sökning
+function showAllMovies() {
+  searchInput.value = "";
+  filterCategory.value = "";
+  movieIdInput.value = "";
+
+  searchMessage.textContent = "";
+  moviesMessage.textContent = "";
+  addMovieMessage.textContent = "";
+  message.textContent = "";
+
+  renderMovies(movies);
 }
 
 // Lägg till film
@@ -308,25 +308,6 @@ async function editMovieRating(movie) {
     moviesMessage.textContent = error.message;
   }
 }
-
-// Lägg till film
-addMovieForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-
-  addMovieMessage.textContent = "";
-  message.textContent = "";
-
-  const newMovie = {
-    title: document.getElementById("title").value,
-    year: Number(document.getElementById("year").value),
-    rating: Number(document.getElementById("rating").value),
-    image: document.getElementById("image").value,
-    categoryId: Number(categorySelect.value),
-  };
-
-  await addMovie(newMovie);
-});
-
 // Sökknapp
 searchBtn.addEventListener("click", filterMovies);
 
