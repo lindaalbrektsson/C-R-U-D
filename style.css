@@ -305,6 +305,22 @@ button:hover {
     background: #cf3f31;
 }
 
+.get-by-id-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: center;
+    margin-top: 12px;
+}
+
+#singleMovieContainer {
+    margin-top: 14px;
+}
+
+#singleMovieContainer .movie-card {
+    max-width: 220px;
+}
+
 /* Mobile */
 @media (max-width: 768px) {
     body {
@@ -348,4 +364,20 @@ button:hover {
     .movie-card img {
         height: 250px;
     }
+}
+
+.get-by-id-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: center;
+    margin-top: 12px;
+}
+
+#singleMovieContainer {
+    margin-top: 14px;
+}
+
+#singleMovieContainer .movie-card {
+    max-width: 220px;
 }

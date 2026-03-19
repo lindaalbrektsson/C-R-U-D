@@ -1,19 +1,20 @@
 const moviesContainer = document.getElementById("moviesContainer");
 const moviesMessage = document.getElementById("moviesMessage");
-
 const message = document.getElementById("message");
 
 const searchMessage = document.getElementById("searchMessage");
 const addMovieMessage = document.getElementById("addMovieMessage");
 
 const getMoviesBtn = document.getElementById("getMoviesBtn");
+const getMovieBtn = document.getElementById("getMovieBtn");
+const searchBtn = document.getElementById("searchBtn");
+
+const movieIdInput = document.getElementById("movieIdInput");
+const searchInput = document.getElementById("searchInput");
+const filterCategory = document.getElementById("filterCategory");
 
 const addMovieForm = document.getElementById("addMovieForm");
 const categorySelect = document.getElementById("categoryId");
-
-const searchInput = document.getElementById("searchInput");
-const filterCategory = document.getElementById("filterCategory");
-const searchBtn = document.getElementById("searchBtn");
 
 const API_MOVIES = "http://localhost:3000/movies";
 const API_CATEGORIES = "http://localhost:3000/categories";
@@ -38,12 +39,54 @@ async function getMovies() {
   }
 }
 
+// Hämta kategorier
+async function getCategories() {
+  try {
+    const response = await fetch(API_CATEGORIES);
+
+    if (!response.ok) {
+      throw new Error("Kunde inte hämta kategorier.");
+    }
+
+    categories = await response.json();
+    renderCategoryOptions();
+  } catch (error) {
+    console.log(error);
+    message.textContent = error.message;
+  }
+}
+
+// Hämta en film via ID
+async function getMovieById(id) {
+  try {
+    const response = await fetch(`${API_MOVIES}/${id}`);
+
+    if (!response.ok) {
+      throw new Error("Kunde inte hitta filmen.");
+    }
+
+    const movie = await response.json();
+
+    searchMessage.textContent = "";
+    moviesMessage.textContent = "";
+    renderMovies([movie]);
+  } catch (error) {
+    moviesContainer.replaceChildren();
+    searchMessage.textContent = error.message;
+  }
+}
+
+// Visa alla filmer igen
 function showAllMovies() {
   searchInput.value = "";
   filterCategory.value = "";
+  movieIdInput.value = "";
+
   searchMessage.textContent = "";
   moviesMessage.textContent = "";
   addMovieMessage.textContent = "";
+  message.textContent = "";
+
   renderMovies(movies);
 }
 
@@ -61,6 +104,10 @@ function renderMovies(movieList) {
 
     const movieTitle = document.createElement("h3");
     movieTitle.textContent = movie.title;
+
+    const movieId = document.createElement("p");
+    movieId.textContent = `Film-ID: ${movie.id}`;
+    movieId.classList.add("movie-id");
 
     const movieYear = document.createElement("p");
     movieYear.textContent = `År: ${movie.year}`;
@@ -103,6 +150,7 @@ function renderMovies(movieList) {
     movieCard.append(
       movieImage,
       movieTitle,
+      movieId,
       movieYear,
       movieRating,
       movieCategory,
@@ -112,23 +160,6 @@ function renderMovies(movieList) {
 
     moviesContainer.appendChild(movieCard);
   });
-}
-
-// Hämta kategorier
-async function getCategories() {
-  try {
-    const response = await fetch(API_CATEGORIES);
-
-    if (!response.ok) {
-      throw new Error("Kunde inte hämta kategorier.");
-    }
-
-    categories = await response.json();
-    renderCategoryOptions();
-  } catch (error) {
-    console.log(error);
-    message.textContent = error.message;
-  }
 }
 
 // Visa kategorier i dropdowns
@@ -161,7 +192,7 @@ function renderCategoryOptions() {
   });
 }
 
-// Sök och filtrera
+// Sök och filtrera filmer
 function filterMovies() {
   let filteredMovies = [...movies];
 
@@ -191,22 +222,6 @@ function filterMovies() {
 }
 
 // Lägg till film
-addMovieForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  addMovieMessage.textContent = "";
-  message.textContent = "";
-
-  const newMovie = {
-    title: document.getElementById("title").value,
-    year: Number(document.getElementById("year").value),
-    rating: Number(document.getElementById("rating").value),
-    image: document.getElementById("image").value,
-    categoryId: Number(categorySelect.value),
-  };
-
-  await addMovie(newMovie);
-});
-
 async function addMovie(newMovie) {
   addMovieMessage.textContent = "";
 
@@ -237,15 +252,16 @@ async function addMovie(newMovie) {
 // Ta bort film
 async function deleteMovie(id) {
   try {
+    moviesMessage.textContent = "";
+
     const response = await fetch(`${API_MOVIES}/${id}`, {
       method: "DELETE",
     });
-    moviesMessage.textContent = "";
+
     if (!response.ok) {
       throw new Error("Kunde inte ta bort filmen.");
     }
 
-    message.textContent = "";
     await getMovies();
     filterMovies();
   } catch (error) {
@@ -293,20 +309,56 @@ async function editMovieRating(movie) {
   }
 }
 
-// Event listeners
+// Lägg till film
+addMovieForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  addMovieMessage.textContent = "";
+  message.textContent = "";
+
+  const newMovie = {
+    title: document.getElementById("title").value,
+    year: Number(document.getElementById("year").value),
+    rating: Number(document.getElementById("rating").value),
+    image: document.getElementById("image").value,
+    categoryId: Number(categorySelect.value),
+  };
+
+  await addMovie(newMovie);
+});
+
+// Sökknapp
 searchBtn.addEventListener("click", filterMovies);
+
+// Filtrera när kategori ändras
 filterCategory.addEventListener("change", filterMovies);
+
+// Visa alla filmer igen
 getMoviesBtn.addEventListener("click", showAllMovies);
 
+// Sök med Enter
 searchInput.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
     filterMovies();
   }
 });
 
+// Automatisk x-knapp i sökfältet
 searchInput.addEventListener("search", filterMovies);
 
-// Start
+// Hämta film via id
+getMovieBtn.addEventListener("click", () => {
+  const id = movieIdInput.value;
+
+  if (!id) {
+    searchMessage.textContent = "Skriv in ett id.";
+    return;
+  }
+
+  getMovieById(id);
+});
+
+// Starta appen
 async function init() {
   await getCategories();
   await getMovies();
