@@ -26,7 +26,7 @@
       "id": "2",
       "title": "Shrek",
       "year": 2001,
-      "rating": 1,
+      "rating": 3,
       "image": "https://image.tmdb.org/t/p/original/6vBnrWfdaE1EOd3ud2xerQwl14a.jpg",
       "categoryId": 1
     },
@@ -34,7 +34,7 @@
       "id": "3",
       "title": "Dirty Dancing",
       "year": 1987,
-      "rating": 5,
+      "rating": 4,
       "image": "https://i.ebayimg.com/images/g/z1oAAOSwNipkcPiE/s-l1600.webp",
       "categoryId": 2
     },

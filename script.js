@@ -308,6 +308,25 @@ async function editMovieRating(movie) {
     moviesMessage.textContent = error.message;
   }
 }
+
+// Lägg till film
+addMovieForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  addMovieMessage.textContent = "";
+  message.textContent = "";
+
+  const newMovie = {
+    title: document.getElementById("title").value,
+    year: Number(document.getElementById("year").value),
+    rating: Number(document.getElementById("rating").value),
+    image: document.getElementById("image").value,
+    categoryId: Number(categorySelect.value),
+  };
+
+  await addMovie(newMovie);
+});
+
 // Sökknapp
 searchBtn.addEventListener("click", filterMovies);
 
