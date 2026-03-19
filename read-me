@@ -1,6 +1,0 @@
-1. Öppna projektmappen i terminalen
-2. Kör:
-   npx json-server --watch db.json
-3. Öppna index.html i webbläsaren
-
-API körs på http://localhost:3000
